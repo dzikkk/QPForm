@@ -7,11 +7,12 @@ class Header extends Component {
     this.state = {login: '', password: ''};
   }
 
-  handleChange = (event) => {
-    this.setState({[event.target.name]: event.target.value});
+  handleChange = (e) => {
+    this.setState({[e.target.name]: e.target.value});
   }
 
-  handleSubmit = (event) => {
+  handleSubmit = (e) => {
+    e.preventDefault();
     console.log('submit');
   }
 
@@ -25,11 +26,11 @@ class Header extends Component {
           </label>
           <label className = 'header-label'>
             PASSWORD:
-            <input className = 'header-input' type="text" name = "password" value={this.state.pass} onChange={this.handleChange} />
+            <input className = 'header-input' type="password" name = "password" value={this.state.pass} onChange={this.handleChange} />
           </label>
           <input type="submit" value="Submit" />
         </form>
-        <span className = 'logged-user'>{this.props.isAdmin ? 'ADMIN' : 'NOT LOGGED'}</span>
+        <span className = 'logged-user'>{this.props.isLogin ? 'ADMIN' : 'NOT LOGGED'}</span>
       </div>
     );
   }
