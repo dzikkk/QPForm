@@ -1,0 +1,24 @@
+.header-wrapper {
+  width: 100%;
+  height: 45px;
+  background-color: rgba(131, 152, 182, 0.62);
+}
+
+.header-wrapper > form, .logged-user {
+  line-height: 45px;
+}
+.header-wrapper > form {
+  float: left;
+}
+.logged-user {
+  float: right;
+  margin-right: 20px;
+}
+
+.header-wrapper label {
+  margin-left: 20px;
+}
+
+.header-wrapper input {
+  margin-left: 10px;
+}
