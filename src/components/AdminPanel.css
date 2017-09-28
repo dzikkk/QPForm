@@ -1,0 +1,49 @@
+.form-list-element {
+  margin: 3px;
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: rgba(113, 219, 219, 0.42);
+}
+
+.form-list-data {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: inline-block;
+}
+
+.form-list-data span {
+  clear:both;
+  display: block;
+}
+
+.form-list-buttons {
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.form-list-buttons .button {
+  cursor: pointer;
+  padding: 3px;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  min-width: 80px;
+  max-width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.form-list-buttons .accept-button {
+  background-color: rgba(103, 247, 45, 0.45);
+}
+
+.form-list-buttons .decline-button {
+  background-color: rgba(237, 80, 21, 0.77);
+}
+
+.form-list-buttons .accept-button:hover {
+  background-color: rgba(103, 247, 45, 0.9);
+}
+
+.form-list-buttons .decline-button:hover {
+  background-color: rgba(237, 80, 21, 0.9);
+}
