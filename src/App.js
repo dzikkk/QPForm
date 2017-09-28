@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Header from './components/Header';
 import Form from './components/Form';
 import AdminPanel from './components/AdminPanel';
+const NODE_URL = 'http://127.0.0.1:3001/'
 
 class App extends Component {
   constructor(props) {
@@ -15,6 +15,16 @@ class App extends Component {
 
     this.submitForm = this.submitForm.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
+  }
+
+  componentDidMount() {
+    fetch(NODE_URL + 'init', {method: "GET"})
+    .then(res => res.json())
+    .then(data => {
+      if (Array.isArray(data) && data.length > 0) {
+        this.setState({formsList: data});
+      }
+    }).catch(err => console.log(err))
   }
 
   submitForm = (form) => {
