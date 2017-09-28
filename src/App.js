@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Header from './components/Header';
 import Form from './components/Form';
+import AdminPanel from './components/AdminPanel';
 
 class App extends Component {
   constructor(props) {
@@ -13,18 +14,30 @@ class App extends Component {
     };
 
     this.submitForm = this.submitForm.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
   }
 
   submitForm = (form) => {
+    form.accepted = false;
     this.setState({formsList: this.state.formsList.concat(form)});
   }
 
+  handleLogin = (loginCredentials) => {
+    this.setState({isLogin: !this.state.isLogin});
+  }
+
+  editForms = (element, action) => {
+    console.log(element);
+  }
+
   render() {
-    console.log(this.state.formsList);
+    const {isLogin, formsList} = this.state;
     return (
       <div className="App">
-        <Header isLogin = {false} loginAction = {this.handleLogin}/>
-        <Form submitFormAction = {this.submitForm}/>
+        <Header isLogin = {isLogin} loginAction = {this.handleLogin}/>
+        {!isLogin
+          ? <Form submitFormAction = {this.submitForm}/>
+          : <AdminPanel formsList = {formsList} modifyAction = {this.editForms}/>}
       </div>
     );
   }

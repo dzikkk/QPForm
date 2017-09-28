@@ -13,7 +13,7 @@ class Header extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log('submit');
+    this.props.loginAction(this.state);
   }
 
   render() {
