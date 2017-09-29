@@ -16,8 +16,9 @@ class AdminPanel extends Component {
   }
 
   renderForm = (prev, next, idx) => {
-    const { name, email, policyid, claimType, claimAmount, dateOccurred, formStatus, changeFormStatus,  _id } = next;
-    const key = _id;
+    const { name, email, policyid, claimType, claimAmount, dateOccurred, formStatus,  _id } = next;
+    if (!_id) return prev;
+    const key = _id + '_unique';
     const buttonPanelClasses = classNames({
       'hide-button': formStatus !== '',
     }, 'form-list-buttons');

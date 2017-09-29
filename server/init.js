@@ -1,8 +1,9 @@
 'use strict';
 const mongoose = require('mongoose');
 const schemas = require('./modelSchemas');
+mongoose.Promise = require('bluebird');
 
-mongoose.connect('mongodb://localhost/formdb');
+mongoose.connect('mongodb://localhost/formdb', { useMongoClient: true });
 const db = mongoose.connection;
 db.on('error', function(err) {
   console.log('Mongoose Error: ', err);
@@ -28,7 +29,7 @@ const admin3 = new UserModel({ login: 'admin0', password: '' });
     if(err) {
       console.log(err);
     } else {
-      console.info('user element added');
+      console.info('init user element added');
     }
   })
 })
@@ -47,6 +48,7 @@ testForm.save(function(err, resp) {
   if(err) {
     console.log(err);
   } else {
-    console.info('form element added');
+    console.info('init form element added');
   }
+  process.exit();
 })

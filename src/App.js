@@ -5,7 +5,6 @@ import Form from './components/Form';
 import AdminPanel from './components/AdminPanel';
 import { updateFormStatus } from './utils';
 const NODE_URL = 'http://127.0.0.1:3001';
-const FORM_SENT = 'Form sent correctly';
 const LOGIN_ERROR = 'INVALID CREDENTIALS';
 
 class App extends Component {

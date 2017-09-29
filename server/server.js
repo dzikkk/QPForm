@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
 const schemas = require('./modelSchemas');
 
-mongoose.connect('mongodb://localhost/formdb');
+mongoose.connect('mongodb://localhost/formdb', { useMongoClient: true });
 const db = mongoose.connection;
 db.on('error', function(err) {
   console.log('Mongoose Error: ', err);
@@ -16,7 +16,6 @@ db.once('connect', function() {
 
 const UserModel = mongoose.model('users', mongoose.Schema(schemas.user));
 const FormModel = mongoose.model('forms', mongoose.Schema(schemas.form));
-
 app.use(bodyParser.json());
 app.get('/init', function(req, res) {
   FormModel.find({}, function(err, forms) {
