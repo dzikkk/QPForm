@@ -19,8 +19,8 @@ with following credentials:
 login : admin
 password : pass
 
-login: 'Admin',
-password: 'admin'
+login: Admin
+password: admin
 
-login: 'admin0',
-password: ''
+login: admin0
+password:
