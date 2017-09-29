@@ -5,6 +5,13 @@
   background-color: rgba(113, 219, 219, 0.42);
 }
 
+.form-list-element .accepted-form {
+  margin: 3px;
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: rgba(113, 219, 219, 0.42);
+}
+
 .form-list-data {
   padding-top: 20px;
   padding-bottom: 20px;
@@ -21,6 +28,7 @@
   margin-right: 10px;
 }
 
+
 .form-list-buttons .button {
   cursor: pointer;
   padding: 3px;
@@ -32,11 +40,16 @@
   margin-left: auto;
   margin-right: auto;
 }
-.form-list-buttons .accept-button {
+
+.hide-button {
+  display: none;
+}
+
+.form-list-buttons .accept-button, .accepted-form {
   background-color: rgba(103, 247, 45, 0.45);
 }
 
-.form-list-buttons .decline-button {
+.form-list-buttons .decline-button, .declined-form {
   background-color: rgba(237, 80, 21, 0.77);
 }
 

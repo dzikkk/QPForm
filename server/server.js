@@ -20,7 +20,6 @@ const FormModel = mongoose.model('forms', mongoose.Schema(schemas.form));
 app.use(bodyParser.json());
 app.get('/init', function(req, res) {
   FormModel.find({}, function(err, forms) {
-    console.log(forms);
     res.send(forms);
   });
 });
@@ -31,6 +30,15 @@ app.post('/login', function(req, res) {
   UserModel.find({ login: login, password: password }).exec(function(err, users) {
     if (err) throw err;
     res.send(users.length > 0);
+  });
+});
+
+app.post('/resolveForm', function(req, res) {
+  const id = req.body.id;
+  const formStatus = req.body.formStatus;
+  FormModel.findOneAndUpdate({ _id: id}, {$set:{formStatus: formStatus}}, { new: true }, function(err, form) {
+    if (err) throw err;
+    res.send(form);
   });
 });
 

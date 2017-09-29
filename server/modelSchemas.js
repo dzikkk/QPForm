@@ -12,6 +12,7 @@ const formSchema = {
   claimType: String,
   claimAmount: Number,
   dateOccurred: String,
+  formStatus: String,
 };
 
 module.exports = {

@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, { Component } from 'react';
 import './AdminPanel.css';
 
@@ -16,18 +17,38 @@ class AdminPanel extends Component {
     this.props.loginAction(this.state);
   }
 
+  resolveFormAction = (formStatus, id) => {
+    this.props.changeFormStatus(formStatus, id);
+  }
+
   renderForm = (prev, next, idx) => {
-    const { name, email, policyid, claimType, claimAmount, dateOccurred } = next;
-    const key = idx + 'form_element';
+    const { name, email, policyid, claimType, claimAmount, dateOccurred, formStatus, changeFormStatus,  _id } = next;
+    const key = _id;
+    const buttonPanelClasses = classNames({
+      'hide-button': formStatus !== '',
+    }, 'form-list-buttons');
+
+    const formListClasses = classNames({
+      'accepted-form': formStatus === 'accept',
+      'declined-form': formStatus === 'declined',
+    }, 'form-list-element');
     return prev.concat(
-      (<div className = 'form-list-element' key = {key}>
+      (<div className = {formListClasses} key = {key}>
         <div className = 'form-list-data'>
-          <span>`Mr./Mrs. {name}, e-mail: {email}, PolicyID: {policyid}, date: {dateOccurred}`</span>
-          <span>`Claims {claimAmount}$ due to {claimType}`</span>
+          <span>Mr./Mrs. {name}, e-mail: {email}, PolicyID: {policyid}, date: {dateOccurred}</span>
+          <span>Claims {claimAmount}$ due to {claimType}</span>
         </div>
-        <div className = 'form-list-buttons'>
-          <div className = 'accept-button button'> ACCEPT </div>
-          <div className = 'decline-button button'> DECLINE </div>
+        <div className = {buttonPanelClasses}>
+          <div
+            className = 'button accept-button'
+            onClick = {() => this.resolveFormAction('accept', _id)}>
+            ACCEPT
+          </div>
+          <div
+            className = 'button decline-button'
+            onClick = {() => this.resolveFormAction('declined', _id)}>
+            DECLINE
+          </div>
         </div>
       </div>)
     );

@@ -3,6 +3,7 @@ import './App.css';
 import Header from './components/Header';
 import Form from './components/Form';
 import AdminPanel from './components/AdminPanel';
+import { updateFormStatus } from './utils';
 const NODE_URL = 'http://127.0.0.1:3001'
 
 class App extends Component {
@@ -15,6 +16,7 @@ class App extends Component {
 
     this.submitForm = this.submitForm.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
+    this.changeFormStatus = this.changeFormStatus.bind(this);
   }
 
   componentDidMount() {
@@ -53,8 +55,22 @@ class App extends Component {
     }
   }
 
-  editForms = (element, action) => {
-    console.log(element);
+  changeFormStatus = (formStatus, id) => {
+    fetch(NODE_URL+'/resolveForm', {
+      method: 'post',
+      body: JSON.stringify({
+        formStatus: formStatus,
+        id: id,
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+    .then(res => res.json())
+    .then(newForm => {
+      const forms = this.state.formsList;
+      this.setState({formsList: updateFormStatus(forms, newForm._id, newForm)});
+    }).catch(err => console.log(err))
   }
 
   render() {
@@ -64,7 +80,11 @@ class App extends Component {
         <Header isLogin = {isLogin} loginAction = {this.handleLogin}/>
         {!isLogin
           ? <Form submitFormAction = {this.submitForm}/>
-          : <AdminPanel formsList = {formsList} modifyAction = {this.editForms}/>}
+          : <AdminPanel
+            formsList = {formsList}
+            modifyAction = {this.editForms}
+            changeFormStatus = {this.changeFormStatus}/>
+          }
       </div>
     );
   }
