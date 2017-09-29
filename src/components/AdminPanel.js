@@ -66,4 +66,9 @@ class AdminPanel extends Component {
   }
 }
 
+AdminPanel.defaultProps = {
+  fetchData: () => {},
+  removeData: () => {}
+};
+
 export default AdminPanel;
