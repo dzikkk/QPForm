@@ -42,6 +42,29 @@ app.post('/resolveForm', function(req, res) {
   });
 });
 
+app.post('/submitForm', function(req, res) {
+  const form = req.body.form;
+  FormModel.update(
+    {
+      name: form.name,
+      email: form.email,
+      policyid: form.policyid,
+      claimType: form.claimType,
+      claimAmount: form.claimAmount,
+      dateOccurred: form.dateOccurred,
+    },
+    {$setOnInsert: form},
+    {upsert: true},
+    function(err, numAffected) {
+      if (numAffected.upserted) {
+        res.send({message: 'Form saved'});
+      } else {
+        res.send({message: 'Form already in system waiting for resolve'});
+      }
+    }
+  );
+});
+
 const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {

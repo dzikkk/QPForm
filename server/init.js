@@ -39,7 +39,7 @@ const testForm = new FormModel({
   policyid: 'AABB-CC11-223-344',
   claimType: 'Theft',
   claimAmount: 999,
-  dateOccurred: '11/12/2000',
+  dateOccurred: '2000-10-11',
   formStatus: '',
 })
 

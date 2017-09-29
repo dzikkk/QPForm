@@ -4,12 +4,15 @@ import Header from './components/Header';
 import Form from './components/Form';
 import AdminPanel from './components/AdminPanel';
 import { updateFormStatus } from './utils';
-const NODE_URL = 'http://127.0.0.1:3001'
+const NODE_URL = 'http://127.0.0.1:3001';
+const FORM_SENT = 'Form sent correctly';
+const LOGIN_ERROR = 'INVALID CREDENTIALS';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      formMessage: null,
       formsList: [],
       isLogin: false,
       loginError: null,
@@ -37,8 +40,20 @@ class App extends Component {
   }
 
   submitForm = (form) => {
-    form.accepted = false;
-    this.setState({formsList: this.state.formsList.concat(form)});
+    form.formStatus = '';
+    fetch(NODE_URL+'/submitForm', {
+      method: 'post',
+      body: JSON.stringify({
+        form: form
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+    .then(res => res.json())
+    .then(sendMessage => {
+      this.setState({formMessage: sendMessage.message});
+    }).catch(err => console.log(err))
   }
 
   handleLogin = (loginCredentials) => {
@@ -59,7 +74,7 @@ class App extends Component {
       .then(loginSuccess => {
         loginSuccess
           ? this.setState({isLogin: loginSuccess, loginError: null})
-          : this.setState({loginError: 'Incorrect Credentials'});
+          : this.setState({loginError: LOGIN_ERROR});
       }).catch(err => console.log(err))
     }
   }
@@ -83,7 +98,7 @@ class App extends Component {
   }
 
   render() {
-    const {isLogin, formsList, loginError} = this.state;
+    const {isLogin, formsList, loginError, formMessage} = this.state;
     return (
       <div className="App">
         <Header
@@ -91,7 +106,10 @@ class App extends Component {
           isLogin = {isLogin}
           loginAction = {this.handleLogin} />
         {!isLogin
-          ? <Form submitFormAction = {this.submitForm}/>
+          ? <Form
+            submitFormAction = {this.submitForm}
+            formMessage = {formMessage}
+          />
           : <AdminPanel
             fetchData = {this.fetchData}
             formsList = {formsList}

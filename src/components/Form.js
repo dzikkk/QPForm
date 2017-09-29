@@ -31,8 +31,10 @@ class Form extends Component {
 
   render() {
     const { name, email, policyid, claimType, claimAmount, dateOccurred } = this.state;
+    const { formMessage } = this.props;
     return (
       <div className = 'form-wrapper'>
+        <span> {formMessage} </span>
         <form onSubmit={this.handleSubmit}>
           <label className = 'form-label'>
             <span>Name:</span>
