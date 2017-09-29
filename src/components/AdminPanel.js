@@ -3,18 +3,12 @@ import React, { Component } from 'react';
 import './AdminPanel.css';
 
 class AdminPanel extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {login: '', password: ''};
+  componentDidMount() {
+    this.props.fetchData();
   }
 
-  handleChange = (e) => {
-    this.setState({[e.target.name]: e.target.value});
-  }
-
-  handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.loginAction(this.state);
+  componentWillUnmount() {
+    this.props.removeData();
   }
 
   resolveFormAction = (formStatus, id) => {

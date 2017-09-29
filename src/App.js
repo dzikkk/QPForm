@@ -12,14 +12,21 @@ class App extends Component {
     this.state = {
       formsList: [],
       isLogin: false,
+      loginError: null,
     };
 
-    this.submitForm = this.submitForm.bind(this);
-    this.handleLogin = this.handleLogin.bind(this);
     this.changeFormStatus = this.changeFormStatus.bind(this);
+    this.fetchData = this.fetchData.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.submitForm = this.submitForm.bind(this);
+    this.removeData = this.removeData.bind(this);
   }
 
-  componentDidMount() {
+  removeData = () => {
+    this.setState({formsList: []})
+  }
+
+  fetchData = () => {
     fetch(NODE_URL + '/init', {method: "GET"})
     .then(res => res.json())
     .then(data => {
@@ -50,7 +57,9 @@ class App extends Component {
       })
       .then(res => res.json())
       .then(loginSuccess => {
-        this.setState({isLogin: loginSuccess});
+        loginSuccess
+          ? this.setState({isLogin: loginSuccess, loginError: null})
+          : this.setState({loginError: 'Incorrect Credentials'});
       }).catch(err => console.log(err))
     }
   }
@@ -74,15 +83,19 @@ class App extends Component {
   }
 
   render() {
-    const {isLogin, formsList} = this.state;
+    const {isLogin, formsList, loginError} = this.state;
     return (
       <div className="App">
-        <Header isLogin = {isLogin} loginAction = {this.handleLogin}/>
+        <Header
+          errors = {loginError}
+          isLogin = {isLogin}
+          loginAction = {this.handleLogin} />
         {!isLogin
           ? <Form submitFormAction = {this.submitForm}/>
           : <AdminPanel
+            fetchData = {this.fetchData}
             formsList = {formsList}
-            modifyAction = {this.editForms}
+            removeData = {this.removeData}
             changeFormStatus = {this.changeFormStatus}/>
           }
       </div>

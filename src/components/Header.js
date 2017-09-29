@@ -17,7 +17,7 @@ class Header extends Component {
   }
 
   render() {
-    const { isLogin } = this.props;
+    const { isLogin, errors } = this.props;
     return (
       <div className = 'header-wrapper'>
         <form onSubmit={this.handleSubmit}>
@@ -43,6 +43,7 @@ class Header extends Component {
           </label>
           <input type='submit' value= {isLogin ? 'LOGOUT' : 'LOGIN'} />
         </form>
+        <span className = 'header-error'>{errors}</span>
         <span className = 'logged-user'>{isLogin ? 'ADMIN' : 'NOT LOGGED'}</span>
       </div>
     );

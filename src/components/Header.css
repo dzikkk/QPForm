@@ -4,6 +4,13 @@
   background-color: rgba(131, 152, 182, 0.62);
 }
 
+.header-error {
+  line-height: 45px;
+  float: left;
+  margin-left: 10px;
+  color: rgb(136, 27, 27);
+}
+
 .header-wrapper > form, .logged-user {
   line-height: 45px;
 }
