@@ -17,20 +17,33 @@ class Header extends Component {
   }
 
   render() {
+    const { isLogin } = this.props;
     return (
       <div className = 'header-wrapper'>
         <form onSubmit={this.handleSubmit}>
           <label className = 'header-label'>
             LOGIN:
-            <input className = 'header-input' type="text" name = "login" value={this.state.login} onChange={this.handleChange} />
+            <input
+              disabled = {isLogin}
+              className = 'header-input'
+              type="text"
+              name = "login"
+              value={this.state.login}
+              onChange={this.handleChange} />
           </label>
           <label className = 'header-label'>
             PASSWORD:
-            <input className = 'header-input' type="password" name = "password" value={this.state.pass} onChange={this.handleChange} />
+            <input
+              disabled = {isLogin}
+              className = 'header-input'
+              type="password"
+              name = "password"
+              value={this.state.pass}
+              onChange={this.handleChange} />
           </label>
-          <input type="submit" value="Submit" />
+          <input type='submit' value= {isLogin ? 'LOGOUT' : 'LOGIN'} />
         </form>
-        <span className = 'logged-user'>{this.props.isLogin ? 'ADMIN' : 'NOT LOGGED'}</span>
+        <span className = 'logged-user'>{isLogin ? 'ADMIN' : 'NOT LOGGED'}</span>
       </div>
     );
   }

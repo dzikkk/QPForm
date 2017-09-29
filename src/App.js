@@ -3,7 +3,7 @@ import './App.css';
 import Header from './components/Header';
 import Form from './components/Form';
 import AdminPanel from './components/AdminPanel';
-const NODE_URL = 'http://127.0.0.1:3001/'
+const NODE_URL = 'http://127.0.0.1:3001'
 
 class App extends Component {
   constructor(props) {
@@ -18,7 +18,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch(NODE_URL + 'init', {method: "GET"})
+    fetch(NODE_URL + '/init', {method: "GET"})
     .then(res => res.json())
     .then(data => {
       if (Array.isArray(data) && data.length > 0) {
@@ -33,7 +33,24 @@ class App extends Component {
   }
 
   handleLogin = (loginCredentials) => {
-    this.setState({isLogin: !this.state.isLogin});
+    if (this.state.isLogin) {
+      this.setState({isLogin: false});
+    } else {
+      fetch(NODE_URL+'/login', {
+        method: 'post',
+        body: JSON.stringify({
+          login: loginCredentials.login,
+          password: loginCredentials.password,
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+      .then(res => res.json())
+      .then(loginSuccess => {
+        this.setState({isLogin: loginSuccess});
+      }).catch(err => console.log(err))
+    }
   }
 
   editForms = (element, action) => {

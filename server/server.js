@@ -1,9 +1,9 @@
 'use strict';
-// const db = require('./mongo.js');
 const express = require('express');
 const app = express();
-
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser')
+const schemas = require('./modelSchemas');
 
 mongoose.connect('mongodb://localhost/formdb');
 const db = mongoose.connection;
@@ -14,47 +14,23 @@ db.once('connect', function() {
   console.log('Mongoose connection successful.');
 });
 
-const userSchema = mongoose.Schema({
-    login: String,
-    password: String,
-});
+const UserModel = mongoose.model('users', mongoose.Schema(schemas.user));
+const FormModel = mongoose.model('forms', mongoose.Schema(schemas.form));
 
-userSchema.method.checkLogin = function (user, password) {
-  return user === this.user && password === this.password;
-}
-
-const UserModel = mongoose.model('users', userSchema);
-
-// ADD ADMIN USER TO DB
-
-const admin = new UserModel({ login: 'admin', password: 'pass' });
-admin.save(function(err, resp) {
-  if(err) {
-      console.log(err);
-  } else {
-      console.info('%d potatoes were successfully stored.',resp);
-  }
-})
-
-const formSchema = mongoose.Schema({
-  name: String,
-  email: String,
-  policyid: String,
-  claimType: String,
-  claimAmount: Number,
-  dateOccurred: String,
-});
-
-const FormModel = mongoose.model('forms', formSchema);
-
-app.get('/', function(req, res) {
-  res.send('SIEMA');
-});
-
+app.use(bodyParser.json());
 app.get('/init', function(req, res) {
   FormModel.find({}, function(err, forms) {
     console.log(forms);
     res.send(forms);
+  });
+});
+
+app.post('/login', function(req, res) {
+  const login = req.body.login;
+  const password = req.body.password;
+  UserModel.find({ login: login, password: password }).exec(function(err, users) {
+    if (err) throw err;
+    res.send(users.length > 0);
   });
 });
 
