@@ -39,7 +39,7 @@ class App extends Component {
   }
 
   submitForm = (form) => {
-    form.formStatus = '';
+    form.formStatus = 'new';
     fetch(NODE_URL+'/submitForm', {
       method: 'post',
       body: JSON.stringify({

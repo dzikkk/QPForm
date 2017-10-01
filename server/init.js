@@ -41,7 +41,7 @@ const testForm = new FormModel({
   claimType: 'Theft',
   claimAmount: 999,
   dateOccurred: '2000-10-11',
-  formStatus: '',
+  formStatus: 'new',
 })
 
 testForm.save(function(err, resp) {

@@ -18,9 +18,10 @@ class AdminPanel extends Component {
   renderForm = (prev, next, idx) => {
     const { name, email, policyid, claimType, claimAmount, dateOccurred, formStatus,  _id } = next;
     if (!_id) return prev;
+    const isNew = formStatus === 'new';
     const key = _id + '_unique';
     const buttonPanelClasses = classNames({
-      'hide-button': formStatus !== '',
+      'hide-button': !isNew,
     }, 'form-list-buttons');
 
     const formListClasses = classNames({
@@ -29,6 +30,10 @@ class AdminPanel extends Component {
     }, 'form-list-element');
     return prev.concat(
       (<div className = {formListClasses} key = {key}>
+        {isNew
+          ? <div className = 'new-form'>NEW</div>
+          : null
+        }
         <div className = 'form-list-data'>
           <span>Mr./Mrs. {name}, e-mail: {email}, PolicyID: {policyid}, date: {dateOccurred}</span>
           <span>Claims {claimAmount}$ due to {claimType}</span>

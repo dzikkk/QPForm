@@ -5,6 +5,15 @@
   background-color: rgba(113, 219, 219, 0.42);
 }
 
+.new-form {
+  float: right;
+  display: inline-block;
+  padding-top: 30px;
+  padding-right: 30px;
+  font-size: 20px;
+  color: rgb(4, 166, 6);
+}
+
 .form-list-element .accepted-form {
   margin: 3px;
   border: 1px solid black;
